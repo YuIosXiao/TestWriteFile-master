@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/rl_configurationdisplay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/ring_color"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
+
+
+    <TextView
+        android:id="@+id/tv_configurationdisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:text="1111"/>
+
+    <Button
+        android:id="@+id/btn_configurationdisplay"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@null"
+        android:text="删除"/>
+
+</RelativeLayout>

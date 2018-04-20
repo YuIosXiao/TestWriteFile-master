@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/font_gray1">
+
+
+    <EditText
+        android:id="@+id/et_editconfiguration_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/appwhite"
+        android:digits="0123456789abcdefghijgklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.:/ "
+        android:gravity="top"
+        android:hint="请输入你的填写内容"
+        android:maxLines="1"
+        android:paddingBottom="15dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="15dp"
+        android:singleLine="true"
+        android:textColorHint="#b0b0b0"
+        android:textSize="15sp"/>
+
+
+    <Button
+        android:id="@+id/btn_editconfiguration_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_editconfiguration_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="提交"/>
+
+</RelativeLayout>

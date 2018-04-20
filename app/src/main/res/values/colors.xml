@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0fafa2</color>
+    <color name="colorPrimaryDark">#0fafa2</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!--XQ-->
+    <color name="dividingline_horizontal">#d9d9d9</color>
+    <color name="appgay">#f3f3f3</color>
+    <color name="appblue">#209bf4</color>
+    <color name="appwhite">#ffffffff</color>
+    <color name="appblack">#000000</color>
+    <color name="appgreen">#00e600</color>
+    <color name="appgreen1">#7dd7d0</color>
+    <color name="font_gray">#666666</color>
+    <color name="font_gray1">#999999</color>
+    <color name="font_gray2">#888888</color>
+    <color name="font_gray3">#b0b0b0</color>
+    <color name="feedback_bg_pre">#0182e2</color>
+    <color name="feedback_bg_nor">#0091fd</color>
+    <color name="button_pre">#80ffffff</color>
+    <color name="update_normal">#ff6a6e</color>
+    <color name="update_press_bg">#e95d61</color>
+    <color name="transparent">#00000000</color>
+    <color name="smooth_green">#00e600</color>
+    <color name="crowded_yellow">#ffc000</color>
+    <color name="full_red">#ff4545</color>
+    <color name="history_pressed">#e6ffffff</color>
+    <color name="history_pressed2">#f3f3f3</color>
+    <color name="history_default">#f2ffffff</color>
+    <color name="button_normal">#7dd7d0</color>
+    <color name="button_press">#2cb9af</color>
+    <color name="button_normal2">#a630d9c2</color>
+    <color name="button_press2">#2ccbb5</color>
+    <color name="button_clickable">#2ec5b9</color>
+    <color name="button_update_nor">#30d9c2</color>
+    <color name="button_update_pre">#9930d9c2</color>
+    <color name="exitapp_nor">#7b7f85</color>
+    <color name="exitaccount_nor">#2ec5b7</color>
+    <color name="circle_color">#f8f1a0</color>
+    <color name="ring_color">#f8f1a0</color>
+    <color name="translucent">#a0000000</color>
+    <color name="font_blue">#1999fc</color>
+    <color name="feedback_processing">#ff5b6c</color>
+    <color name="feedback_solved">#00cfb2</color>
+    <!--XQ-->
+
+
+    <!--Z-->
+
+    <color name="main_background">#f3f3f3</color>
+    <color name="title_bar_background">#2ec5b9</color>
+    <color name="navbar_textcolor">#7b7f88</color>
+    <color name="navbar_textcolor_selection">#2fc4ba</color>
+    <color name="blue">#3d7dff</color>
+    <color name="green">#2cf52c</color>
+    <color name="white">#fafafa</color>
+    <color name="serverlist_bttv_blue">#991999fc</color>
+    <color name="serverlist_bttv_orange">#99ffa200</color>
+    <color name="line">#cecece</color>
+    <color name="button_pre_second">#99ffffff</color>
+    <color name="full_button">#30d9c2</color>
+    <color name="sign">#ffe241</color>
+    <color name="feedback_record_type">#243886</color>
+
+    <drawable name="history_pressed2">#f3f3f3</drawable>
+    <color name="norwhite">#ffffff</color>
+
+</resources>
