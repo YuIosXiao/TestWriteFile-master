@@ -8,7 +8,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String originalFilePath = "";
     public static String targetFilePath = "";
+    public static String usesFilePath = "";
 
 
     @Override
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         button4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mergeFiles();
+                EditConfigurationActivity.createUseFile(originalFilePath, usesFilePath, targetFilePath);
             }
         });
 
@@ -78,7 +78,8 @@ public class MainActivity extends AppCompatActivity {
 
 
         originalFilePath = mActivity.getExternalFilesDir(null) + File.separator + "android_d2o";
-        targetFilePath = mActivity.getExternalFilesDir("myfolder") + File.separator + "android_d2ocustomize";
+        targetFilePath = mActivity.getExternalFilesDir("myfolder") + File.separator + "android_d2o_customize";
+        usesFilePath = mActivity.getExternalFilesDir("myfolder") + File.separator + "android_d2o_new";
     }
 
     public void writeDataToFile(String filepath) {
@@ -132,63 +133,6 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             Log.i("11111", "----->将要被删除的文件不存在！");
-        }
-    }
-
-    /**
-     * 合并android_d2o和android_d2ocustomize 文件内容
-     */
-
-
-    public void mergeFiles() {
-        if (FileUtils.isFileExists(originalFilePath)) {
-            String proxy_domain_target = "";
-            String ipproxy_target = "";
-            if (FileUtils.isFileExists(targetFilePath)) {
-                List<String> targetList = FileUtils.readFile2List(targetFilePath, "utf-8");
-                EditConfigurationActivity.domainOrIp(targetList);
-                StringBuilder sbstr = EditConfigurationActivity.conversionFlieData(EditConfigurationActivity.domainOrIp(targetList));
-                String[] sbstrarray = sbstr.toString().split("\\r\\n");
-
-
-                for (int i = 0; i < sbstrarray.length; i++) {//暂时只有proxy_domain和ipproxy 字段
-                    if (sbstrarray[i].startsWith("proxy_domain")) {
-                        proxy_domain_target = sbstrarray[i].replace("proxy_domain", "");
-                    } else if (sbstrarray[i].startsWith("ipproxy")) {
-                        ipproxy_target = sbstrarray[i].replace("ipproxy", "");
-                    }
-                }
-            }
-            List<String> originalList = FileUtils.readFile2List(originalFilePath, "utf-8");
-            StringBuilder sbstr = new StringBuilder();
-            if (!StringUtils.isBlank(originalList) && originalList.size() > 0) {
-                for (int i = 0; i < originalList.size(); i++) {
-                    if (originalList.get(i).toString().startsWith("proxy_domain")) {
-                        if (!StringUtils.isBlank(proxy_domain_target)) {
-                            sbstr.append(originalList.get(i).toString() + " " + proxy_domain_target.trim() + "\r\n");
-                        } else {
-                            sbstr.append(originalList.get(i).toString() + "\r\n");
-                        }
-                    } else if (originalList.get(i).toString().startsWith("ipproxy")) {
-                        if (!StringUtils.isBlank(proxy_domain_target)) {
-                            sbstr.append(originalList.get(i).toString() + " " + ipproxy_target.trim() + "\r\n");
-                        } else {
-                            sbstr.append(originalList.get(i).toString() + "\r\n");
-                        }
-                    } else {
-                        sbstr.append(originalList.get(i).toString() + "\r\n");
-                    }
-                }
-            }
-            InputStream in = new ByteArrayInputStream(sbstr.toString().getBytes());
-            if (FileUtils.writeFileFromIS(originalFilePath, in, false)) {
-                Log.i("11111", "----->文件写入成功！");
-            } else {
-                Log.i("11111", "----->文件写入失败！");
-            }
-        } else {
-            Toast.makeText(mActivity, "android_d2o不存在！", Toast.LENGTH_LONG).show();
-            return;
         }
     }
 }

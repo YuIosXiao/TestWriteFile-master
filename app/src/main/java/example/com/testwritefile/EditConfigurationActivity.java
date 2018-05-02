@@ -114,6 +114,15 @@ public class EditConfigurationActivity extends AppCompatActivity {
                 addflag = false;
             }
         }
+
+        if (addflag) {
+            ConfigurationDisplayActivity.modifyflag = true;
+        } else {
+            ConfigurationDisplayActivity.modifyflag = false;
+        }
+        if (ConfigurationDisplayActivity.modifyflag) {
+            EditConfigurationActivity.mergeFiles(MainActivity.originalFilePath, MainActivity.usesFilePath, MainActivity.targetFilePath);
+        }
         return addflag;
     }
 
@@ -161,7 +170,7 @@ public class EditConfigurationActivity extends AppCompatActivity {
     }
 
     /**
-     * 将android_d2ocustomize文件数据转化成android_d2o文件格式
+     * 将android_d2o_customize文件数据转化成android_d2o文件格式
      */
     public static StringBuilder conversionFlieData(Map<String, List<String>> contentMap) {
         List<String> list = FileUtils.readFile2List("", "utf-8");
@@ -259,7 +268,105 @@ public class EditConfigurationActivity extends AppCompatActivity {
             }
             deleteflag = writeDataToFile(filepath, sbstr.toString(), false);
         }
+        if (deleteflag) {
+            ConfigurationDisplayActivity.modifyflag = true;
+        } else {
+            ConfigurationDisplayActivity.modifyflag = false;
+        }
+        if (ConfigurationDisplayActivity.modifyflag) {
+            EditConfigurationActivity.mergeFiles(MainActivity.originalFilePath, MainActivity.usesFilePath, MainActivity.targetFilePath);
+        }
         return deleteflag;
+    }
+
+    /**
+     * android_d2o文件内容复制到android_d2o_new文件中
+     */
+    public static boolean copyFileTOFile(String targetfilepath, String filepath) {
+        boolean copyflag = false;
+        if (FileUtils.isFileExists(filepath)) {
+            if (FileUtils.copyFile(filepath, targetfilepath)) {
+                copyflag = true;
+            } else {
+                copyflag = false;
+            }
+        } else {
+            copyflag = false;
+        }
+        return copyflag;
+    }
+
+    /**
+     * 合并android_d2o_new和android_d2o_customize文件内容
+     */
+    public static boolean mergeFiles(String originalFilePath, String usesFilePath, String targetFilePath) {
+        boolean mergeflag = false;
+        if (FileUtils.isFileExists(originalFilePath)) {
+            String proxy_domain_target = "";
+            String ipproxy_target = "";
+            if (FileUtils.isFileExists(targetFilePath)) {
+                List<String> targetList = FileUtils.readFile2List(targetFilePath, "utf-8");
+                EditConfigurationActivity.domainOrIp(targetList);
+                StringBuilder sbstr = EditConfigurationActivity.conversionFlieData(EditConfigurationActivity.domainOrIp(targetList));
+                String[] sbstrarray = sbstr.toString().split("\\r\\n");
+
+
+                for (int i = 0; i < sbstrarray.length; i++) {//暂时只有proxy_domain和ipproxy 字段
+                    if (sbstrarray[i].startsWith("proxy_domain")) {
+                        proxy_domain_target = sbstrarray[i].replace("proxy_domain", "");
+                    } else if (sbstrarray[i].startsWith("ipproxy")) {
+                        ipproxy_target = sbstrarray[i].replace("ipproxy", "");
+                    }
+                }
+            }
+            List<String> originalList = FileUtils.readFile2List(originalFilePath, "utf-8");
+            StringBuilder sbstr = new StringBuilder();
+            if (!StringUtils.isBlank(originalList) && originalList.size() > 0) {
+                for (int i = 0; i < originalList.size(); i++) {
+                    if (originalList.get(i).toString().startsWith("proxy_domain")) {
+                        if (!StringUtils.isBlank(proxy_domain_target)) {
+                            sbstr.append(originalList.get(i).toString() + " " + proxy_domain_target.trim() + "\r\n");
+                        } else {
+                            sbstr.append(originalList.get(i).toString() + "\r\n");
+                        }
+                    } else if (originalList.get(i).toString().startsWith("ipproxy")) {
+                        if (!StringUtils.isBlank(proxy_domain_target)) {
+                            sbstr.append(originalList.get(i).toString() + " " + ipproxy_target.trim() + "\r\n");
+                        } else {
+                            sbstr.append(originalList.get(i).toString() + "\r\n");
+                        }
+                    } else {
+                        sbstr.append(originalList.get(i).toString() + "\r\n");
+                    }
+                }
+            }
+            InputStream in = new ByteArrayInputStream(sbstr.toString().getBytes());
+            if (FileUtils.writeFileFromIS(usesFilePath, in, false)) {
+                Log.i("11111", "----->文件写入成功！");
+                mergeflag = true;
+            } else {
+                Log.i("11111", "----->文件写入失败！");
+                mergeflag = false;
+            }
+        } else {
+            Log.i("11111", "----->android_d2o不存在！");
+            mergeflag = false;
+        }
+        return mergeflag;
+    }
+
+    /**
+     * 创建android_d2o_new文件内容
+     */
+    public static boolean createUseFile(String originalFilePath, String usesFilePath, String targetFilePath) {
+        boolean createflag = false;
+        if (FileUtils.isFileExists(originalFilePath)) {//android_d2o_new不存在则，复制android_d2o文件内容
+            createflag = copyFileTOFile(usesFilePath, originalFilePath);
+        }
+        if (FileUtils.isFileExists(originalFilePath) && FileUtils.isFileExists(targetFilePath)) {//如果android_d2o_customize存在，直接合并文件内容
+            createflag = mergeFiles(originalFilePath, usesFilePath, targetFilePath);
+        }
+        return createflag;
     }
 
 

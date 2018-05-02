@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -25,6 +24,7 @@ public class ConfigurationDisplayActivity extends AppCompatActivity {
     private ConfigurationDisplayAdapter configurationDisplayAdapter;
     private LinearLayoutManager layoutManager;//布局管理器
     private Button button1;
+    public static boolean modifyflag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,7 @@ public class ConfigurationDisplayActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(mActivity);
 
 
-        String filepath = mActivity.getExternalFilesDir("myfolder") + File.separator + "android_d2ocustomize";
-        List<String> list = FileUtils.readFile2List(filepath, "utf-8");
+        List<String> list = FileUtils.readFile2List(MainActivity.targetFilePath, "utf-8");
         if (!StringUtils.isBlank(list) && list.size() > 0) {
             configurationDisplayAdapter = new ConfigurationDisplayAdapter(mActivity, list);
             rv_configurationdisplay.setLayoutManager(layoutManager);// 设置布局管理器
@@ -57,14 +56,5 @@ public class ConfigurationDisplayActivity extends AppCompatActivity {
         } else {
             Toast.makeText(mActivity, "自定白名单数据为空！", Toast.LENGTH_LONG).show();
         }
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-
-
     }
 }
